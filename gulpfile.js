@@ -10,17 +10,20 @@ var templateCache = require('gulp-angular-templatecache');
 var uglify        = require('gulp-uglify');
 var merge         = require('merge-stream');
 var inject        = require('gulp-inject');
-var sass = require('gulp-sass');
+var sass          = require('gulp-sass');
+var del           = require('del');
+var plumber       = require('gulp-plumber');
+var concat        = require('gulp-concat');
 
 // file locations
 var jsFiles   = "src/js/**/*.js";
 var viewFiles = "src/js/**/*.html";
-var sassFiles= "./src/sass/example.sass";
+var sassFiles= "./src/sass/index.sass";
 var jsonFile="src/mock/*.json";
 var indexHtml="./src/index.html";
 var listOfItem=['*.css'];
 
-let interceptErrors = function(error) {
+let interceptErrors = (error) =>{
 let args = Array.prototype.slice.call(arguments);
  
   notify.onError({
@@ -29,20 +32,23 @@ let args = Array.prototype.slice.call(arguments);
   }).apply(this, args);
   this.emit('end');
 };
+gulp.task('clean:css', () => del('./build'));
+gulp.task('clean:Js', () => del('./build'));
 
-gulp.task('injectfile',function(){
+gulp.task('injectfile',()=>{
     let target= gulp.src(indexHtml);
     let source= gulp.src(listOfItem,{read:false});
    return target.pipe(inject(source)).pipe(gulp.dest('./build/'));
    });
 
-gulp.task('sasstocss', function () {
+gulp.task('sasstocss', ()=> {
     return gulp.src(sassFiles)
+     .pipe(plumber())
      .pipe(sass().on('error', sass.logError))
      .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('browserify', ['views'], function() {
+gulp.task('browserify', ['views'], ()=> {
   return browserify('./src/js/app.js')
       .transform(babelify, {presets: ["es2015"]})
       .transform(ngAnnotate)
@@ -54,19 +60,19 @@ gulp.task('browserify', ['views'], function() {
       .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('json', function() {
+gulp.task('json', ()=> {
   return gulp.src(jsonFile)
       .on('error', interceptErrors)
       .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('html', function() {
+gulp.task('html', ()=> {
   return gulp.src("src/index.html")
       .on('error', interceptErrors)
       .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('views', function() {
+gulp.task('views', ()=> {
   return gulp.src(viewFiles)
       .pipe(templateCache({
         standalone: true
@@ -76,20 +82,20 @@ gulp.task('views', function() {
       .pipe(gulp.dest('./src/js/config/'));
 });
 
-gulp.task('build', ['html', 'browserify','sasstocss'], function() {
+gulp.task('build', ['html', 'browserify','sasstocss'], ()=> {
   let html = gulp.src("build/index.html")
                  .pipe(gulp.dest('./dist/'));
 
   let js = gulp.src("build/main.js")
                .pipe(uglify())
                .pipe(gulp.dest('./dist/'));
-  let css = gulp.src("build/example.css")
+  let css = gulp.src("build/index.css")
                .pipe(gulp.dest('./dist/'));
 
   return merge(html,js,css);
 });
 
-gulp.task('default', ['html', 'browserify'], function() {
+gulp.task('default', ['html', 'browserify'], ()=> {
 
   browserSync.init(['./build/**/**.**'], {
     server: "./build",
