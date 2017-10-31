@@ -1,0 +1,6 @@
+<div class="row" ng-if="$ctrl.todos.length>0" ng-repeat="info in $ctrl.todos" >
+        <div  class="col-md-3" style="padding-right:60px;display:inline-block;"><span >{{info}}</span></div>
+       <div class="col-md-3"><i  class="fa fa-trash"  style="color:red;display:inline-block;" aria-hidden="true" ng-click="$ctrl.removeTask(info)"></i>      </div> 
+    <br/>
+         
+   </div>
