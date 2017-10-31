@@ -48,25 +48,18 @@ nav
 .displayFrame-block 
   padding: 1.25rem
 .displayFrame-block::after
-    content: ""
-    display: table
-    clear: both
-
+    +basic-after()
 .displayFrame-footer 
   padding: 0.75rem 1.25rem
   background-color: #f5f5f5
   box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.125)
 .displayFrame-footer::after 
-   content: ""
-    display: table
-    clear: both
+   +basic-after()
 .navbar 
   position: relative
   padding: 0.5rem 1rem 
 .navbar::after
-    content: ""
-    display: table
-    clear: both
+    +basic-after()
 .navbar-nav .nav-link 
     display: block
     padding-top: .425rem
@@ -74,10 +67,7 @@ nav
     font-size: 14px
     color: green
 .container-fluid
-    margin-left: auto
-    margin-right: auto
-    padding-left: 15px
-    padding-right: 15px
+    +container-fluid1(auto,15px)
 
 
 
