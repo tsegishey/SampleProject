@@ -1,0 +1,78 @@
+body
+  font: 100% $font-stack
+  color: $primary-color
+  background-color: $background-color 
+  div
+     font-size: 12px
+nav
+  ul
+    margin: 0
+    padding: 0
+    list-style: $display-primary
+
+  li
+    display: inline-block
+
+  a
+    display: block
+    padding: 6px 12px
+    text-decoration: $display-primary
+    color: #5CB85C
+    font-size: $primary_size
+
+.customheader 
+   color: darkgreen
+   font-size: $primary_size
+   text-decoration: $display-primary
+   font-style: italic
+.btn-primary 
+    color: #fff
+    background-color: $btn-color
+    border-color: $btn-color
+.btn-primary:hover
+    color: #fff
+    background-color: $btn-color
+    border-color: $btn-color
+    
+.displayFrame 
+  position: relative
+  display: block
+  margin-bottom: 0.75rem
+  background-color: white
+  border-radius: 0.25rem
+  box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.125) 
+
+.divtitile
+  color: $secondary-color
+
+.displayFrame-block 
+  padding: 1.25rem
+.displayFrame-block::after
+    +basic-after()
+.displayFrame-footer 
+  padding: 0.75rem 1.25rem
+  background-color: #f5f5f5
+  box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.125)
+.displayFrame-footer::after 
+   +basic-after()
+.navbar 
+  position: relative
+  padding: 0.5rem 1rem 
+.navbar::after
+    +basic-after()
+.navbar-nav .nav-link 
+    display: block
+    padding-top: .425rem
+    padding-bottom: .425rem
+    font-size: 14px
+    color: green
+.container-fluid
+    +container-fluid1(auto,15px)
+
+
+
+
+   
+
+
+

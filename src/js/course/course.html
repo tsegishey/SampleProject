@@ -1,0 +1,16 @@
+
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-xs-12 col-md-10">
+     <div class="header customheader">Courses taken this Month:&nbsp;&nbsp;{{$ctrl.newarray.length }}</div><br/>
+        <div ng-repeat="item in $ctrl.ItemsDone" ><input type="checkbox" ng-model="item.checked" ng-click="$ctrl.onchange(item.name,item.checked)" >&nbsp;&nbsp;{{item.name}}</div>
+       </div>
+       <br/>
+       
+   
+    </div>
+  </div>
+
+</div>
