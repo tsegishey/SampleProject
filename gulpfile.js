@@ -14,6 +14,7 @@ var sass          = require('gulp-sass');
 var del           = require('del');
 var plumber       = require('gulp-plumber');
 var concat        = require('gulp-concat');
+var cleanCSS      = require('gulp-clean-css');
 
 // file locations
 var jsFiles   = "src/js/**/*.js";
@@ -45,6 +46,10 @@ gulp.task('sasstocss', ()=> {
     return gulp.src(sassFiles)
      .pipe(plumber())
      .pipe(sass().on('error', sass.logError))
+     .pipe(concat('index.css'))
+     .pipe(cleanCSS({
+            compatibility: 'ie10'
+        }))
      .pipe(gulp.dest('./build/'));
 });
 
