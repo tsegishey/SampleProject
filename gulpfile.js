@@ -1,31 +1,31 @@
-var gulp          = require('gulp');
-var notify        = require('gulp-notify');
-var source        = require('vinyl-source-stream');
-var browserify    = require('browserify');
-var babelify      = require('babelify');
-var ngAnnotate    = require('browserify-ngannotate');
-var browserSync   = require('browser-sync').create();
-var rename        = require('gulp-rename');
-var templateCache = require('gulp-angular-templatecache');
-var uglify        = require('gulp-uglify');
-var merge         = require('merge-stream');
-var inject        = require('gulp-inject');
-var sass          = require('gulp-sass');
-var del           = require('del');
-var plumber       = require('gulp-plumber');
-var concat        = require('gulp-concat');
-var cleanCSS      = require('gulp-clean-css');
-var gulpSequence = require('gulp-sequence');
+const  gulp          = require('gulp');
+const  notify        = require('gulp-notify');
+const  source        = require('vinyl-source-stream');
+const  browserify    = require('browserify');
+const  babelify      = require('babelify');
+const  ngAnnotate    = require('browserify-ngannotate');
+const  browserSync   = require('browser-sync').create();
+const  rename        = require('gulp-rename');
+const  templateCache = require('gulp-angular-templatecache');
+const  uglify        = require('gulp-uglify');
+const  merge         = require('merge-stream');
+const  inject        = require('gulp-inject');
+const  sass          = require('gulp-sass');
+const  del           = require('del');
+const  plumber       = require('gulp-plumber');
+const  concat        = require('gulp-concat');
+const  cleanCSS      = require('gulp-clean-css');
+const  gulpSequence = require('gulp-sequence');
 // file locations
-var jsFiles   = "src/js/**/*.js";
-var viewFiles = "src/js/**/*.html";
-var sassFiles= "./src/sass/index.sass";
-var jsonFile="src/mock/*.json";
-var indexHtml="./build/index.html";
-var listOfItem=['./build/*.css'];
+const  jsFiles   = "src/js/**/*.js";
+const  viewFiles = "src/js/**/*.html";
+const  sassFiles= "./src/sass/index.sass";
+const  jsonFile="src/mock/*.json";
+const  indexHtml="./build/index.html";
+const  listOfItem=['./build/*.css'];
 
-let interceptErrors = (error) =>{
-let args = Array.prototype.slice.call(arguments);
+const interceptErrors = (error) =>{
+const args = Array.prototype.slice.call(arguments);
  
   notify.onError({
     title: 'Compile Error',
@@ -49,8 +49,8 @@ gulp.task('sasstocss', ()=> {
 });
 
 gulp.task('injectfile',()=>{
-  let target= gulp.src(indexHtml);
-  let source= gulp.src(listOfItem,{read:false},{relative: true});
+  const  target= gulp.src(indexHtml);
+  const  source= gulp.src(listOfItem,{read:false},{relative: true});
  return target.pipe(inject(source)).pipe(gulp.dest('./build'));
  });
 
@@ -84,13 +84,13 @@ gulp.task('views', ()=> {
       .pipe(gulp.dest('./src/js/config/'));
 });
 gulp.task('build', ['html', 'browserify','sasstocss'], ()=> {
-  let html = gulp.src("build/index.html")
+  const  html = gulp.src("build/index.html")
                  .pipe(gulp.dest('./dist/'));
 
-  let js = gulp.src("build/main.js")
+  const  js = gulp.src("build/main.js")
                .pipe(uglify())
                .pipe(gulp.dest('./dist/'));
-  let css = gulp.src("build/index.css")
+  const  css = gulp.src("build/index.css")
                .pipe(gulp.dest('./dist/'));
 
   return merge(html,js,css);
