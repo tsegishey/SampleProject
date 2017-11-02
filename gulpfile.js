@@ -15,14 +15,14 @@ var del           = require('del');
 var plumber       = require('gulp-plumber');
 var concat        = require('gulp-concat');
 var cleanCSS      = require('gulp-clean-css');
-
+var gulpSequence = require('gulp-sequence');
 // file locations
 var jsFiles   = "src/js/**/*.js";
 var viewFiles = "src/js/**/*.html";
 var sassFiles= "./src/sass/index.sass";
 var jsonFile="src/mock/*.json";
-var indexHtml="./src/index.html";
-var listOfItem=['*.css'];
+var indexHtml="./build/index.html";
+var listOfItem=['./build/*.css'];
 
 let interceptErrors = (error) =>{
 let args = Array.prototype.slice.call(arguments);
@@ -33,25 +33,33 @@ let args = Array.prototype.slice.call(arguments);
   }).apply(this, args);
   this.emit('end');
 };
-gulp.task('clean:css', () => del('./build'));
-gulp.task('clean:Js', () => del('./build'));
-
-gulp.task('injectfile',()=>{
-    let target= gulp.src(indexHtml);
-    let source= gulp.src(listOfItem,{read:false});
-   return target.pipe(inject(source)).pipe(gulp.dest('./build/'));
-   });
+gulp.task('clean', () => del('./build/'));
+gulp.task('html', ()=> {
+  return gulp.src("src/index.html")
+      .on('error', interceptErrors)
+      .pipe(gulp.dest('./build/'));
+});
 
 gulp.task('sasstocss', ()=> {
     return gulp.src(sassFiles)
      .pipe(plumber())
      .pipe(sass().on('error', sass.logError))
      .pipe(concat('index.css'))
-     .pipe(cleanCSS({
-            compatibility: 'ie10'
-        }))
      .pipe(gulp.dest('./build/'));
 });
+
+gulp.task('injectfile',()=>{
+  let target= gulp.src(indexHtml);
+  let source= gulp.src(listOfItem,{read:false},{relative: true});
+ return target.pipe(inject(source)).pipe(gulp.dest('./build'));
+ });
+
+ gulp.task('json', ()=> {
+  return gulp.src(jsonFile)
+      .on('error', interceptErrors)
+      .pipe(gulp.dest('./build/'));
+});
+
 
 gulp.task('browserify', ['views'], ()=> {
   return browserify('./src/js/app.js')
@@ -65,17 +73,6 @@ gulp.task('browserify', ['views'], ()=> {
       .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('json', ()=> {
-  return gulp.src(jsonFile)
-      .on('error', interceptErrors)
-      .pipe(gulp.dest('./build/'));
-});
-
-gulp.task('html', ()=> {
-  return gulp.src("src/index.html")
-      .on('error', interceptErrors)
-      .pipe(gulp.dest('./build/'));
-});
 
 gulp.task('views', ()=> {
   return gulp.src(viewFiles)
@@ -86,7 +83,6 @@ gulp.task('views', ()=> {
       .pipe(rename("app.templates.js"))
       .pipe(gulp.dest('./src/js/config/'));
 });
-
 gulp.task('build', ['html', 'browserify','sasstocss'], ()=> {
   let html = gulp.src("build/index.html")
                  .pipe(gulp.dest('./dist/'));
@@ -99,7 +95,7 @@ gulp.task('build', ['html', 'browserify','sasstocss'], ()=> {
 
   return merge(html,js,css);
 });
-
+gulp.task('sequence', gulpSequence(['html', 'sasstocss'],['injectfile', 'json'], 'views'));
 gulp.task('default', ['html', 'browserify'], ()=> {
 
   browserSync.init(['./build/**/**.**'], {
