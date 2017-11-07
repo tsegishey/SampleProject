@@ -9,8 +9,7 @@ class courseCtrl {
   }
   activate(){
     this._CourseService.courseList().then(res => {
-      console.log(res);
-      this.ItemsDone =JSON.parse(JSON.stringify(res.data)).ItemsDone;
+        this.ItemsDone =JSON.parse(JSON.stringify(res.data)).ItemsDone;
     });
   }
 
@@ -21,7 +20,7 @@ class courseCtrl {
    }
    else
    {
-    let index =this.newarray.indexOf(item);
+    const index =this.newarray.indexOf(item);
     this.newarray.splice(index, 1);
    }
 
