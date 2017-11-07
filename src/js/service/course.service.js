@@ -6,12 +6,12 @@ export default class CourseService {
                      }
 
     courseList(){
-        let promiseone=this._$http.get('mock.service.json');
+        const promiseone=this._$http.get('mock.service.json');
                    return promiseone;  
                     }
     postItemList(){
 
-        let promisetwo=this._$http.get('mock.service1.json');
+        const promisetwo=this._$http.get('mock.service1.json');
         return promisetwo;
                     }
       }
