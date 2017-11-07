@@ -8,7 +8,7 @@ class navigationCtrl {
 
   submit(post){
     console.log(post);
-    if(post!="" || post!=undefined ||post!=null ){
+    if(post!=="" || post!==undefined ||post!==null ){
       this.postList.push(post);
           }
     else{
