@@ -4,7 +4,7 @@ class AppHeaderCtrl {
     }
 }
 
-let AppHeader = {
+const AppHeader = {
   controller: AppHeaderCtrl,
   templateUrl: 'main/header.html'
 };
