@@ -13,7 +13,7 @@ $onChanges(changes){
 }
 removeTask(taskname){
   for(let i = 0; i < this.todos.length; i++) {
-      if(this.todos[i] == taskname) {
+      if(this.todos[i] === taskname) {
           this.todos.splice(i, 1);
           break;
       }
