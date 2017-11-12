@@ -11,11 +11,11 @@ const  uglify        = require('gulp-uglify');
 const  merge         = require('merge-stream');
 const  inject        = require('gulp-inject');
 const  sass          = require('gulp-sass');
-const  del           = require('del');
 const  plumber       = require('gulp-plumber');
 const  concat        = require('gulp-concat');
 const  cleanCSS      = require('gulp-clean-css');
 const  gulpSequence = require('gulp-sequence');
+const  del           = require('del');
 // file locations
 const  jsFiles   = "src/js/**/*.js";
 const  viewFiles = "src/js/**/*.html";
@@ -24,19 +24,19 @@ const  jsonFile="src/mock/*.json";
 const  indexHtml="./build/index.html";
 const  listOfItem=['./build/*.css'];
 
-const interceptErrors = (error) =>{
-const args = Array.prototype.slice.call(arguments);
+// let interceptErrors = (error) =>{
+// let args = Array.prototype.slice.call(arguments);
  
-  notify.onError({
-    title: 'Compile Error',
-    message: '<%= error.message %>'
-  }).apply(this, args);
-  this.emit('end');
-};
+//   notify.onError({
+//     title: 'Compile Error',
+//     message: '<%= error.message %>'
+//   }).apply(this, args);
+//   this.emit('end');
+// };
 gulp.task('clean', () => del('./build/'));
 gulp.task('html', ()=> {
   return gulp.src("src/index.html")
-      .on('error', interceptErrors)
+      //.on('error', interceptErrors)
       .pipe(gulp.dest('./build/'));
 });
 
@@ -49,14 +49,14 @@ gulp.task('sasstocss', ()=> {
 });
 
 gulp.task('injectfile',()=>{
-  const  target= gulp.src(indexHtml);
-  const  source= gulp.src(listOfItem,{read:false},{relative: true});
+  const target= gulp.src(indexHtml);
+  const source= gulp.src(listOfItem,{read:false},{relative: true});
  return target.pipe(inject(source)).pipe(gulp.dest('./build'));
  });
 
  gulp.task('json', ()=> {
   return gulp.src(jsonFile)
-      .on('error', interceptErrors)
+      //.on('error', interceptErrors)
       .pipe(gulp.dest('./build/'));
 });
 
@@ -66,7 +66,7 @@ gulp.task('browserify', ['views'], ()=> {
       .transform(babelify, {presets: ["es2015"]})
       .transform(ngAnnotate)
       .bundle()
-      .on('error', interceptErrors)
+     // .on('error', interceptErrors)
       //Pass desired output filename to vinyl-source-stream
       .pipe(source('main.js'))
       // Start piping stream to tasks!
@@ -79,18 +79,18 @@ gulp.task('views', ()=> {
       .pipe(templateCache({
         standalone: true
       }))
-      .on('error', interceptErrors)
+     // .on('error', interceptErrors)
       .pipe(rename("app.templates.js"))
       .pipe(gulp.dest('./src/js/config/'));
 });
 gulp.task('build', ['html', 'browserify','sasstocss'], ()=> {
-  const  html = gulp.src("build/index.html")
+  const html = gulp.src("build/index.html")
                  .pipe(gulp.dest('./dist/'));
 
-  const  js = gulp.src("build/main.js")
+  const js = gulp.src("build/main.js")
                .pipe(uglify())
                .pipe(gulp.dest('./dist/'));
-  const  css = gulp.src("build/index.css")
+  const css = gulp.src("build/index.css")
                .pipe(gulp.dest('./dist/'));
 
   return merge(html,js,css);
