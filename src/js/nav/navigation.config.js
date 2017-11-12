@@ -4,8 +4,7 @@ function navigationConfig($stateProvider) {
   $stateProvider
   .state('app.nav', {
     url: '/nav/:slug',
-    controller: 'navigationCtrl',
-    controllerAs: '$ctrl',
+    component: 'navigationcomp',
     templateUrl: 'nav/navigation.html',
     title: 'navigation'
   });

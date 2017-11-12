@@ -1,0 +1,33 @@
+  
+  <div class="container page">
+    <div ng-bind="::$ctrl.appName" class="customheader"></div><br/>
+ <div  ng-if="$ctrl.postList.length>0" class="divtitile">List of Post Comments:{{$ctrl.postList.length}}</div>
+  <div class="row">
+    <div class="col-xs-12 col-md-8">
+      <div>
+        <form class="displayFrame comment-form">
+          <div class="displayFrame-block">
+            <textarea ng-model="$ctrl.textdata" class="form-control"
+              placeholder="Write your feed back..."
+              rows="2"></textarea>
+          </div>
+          <div class="displayFrame-footer">
+            <div ng-if="$ctrl.editItem===''">
+             <button class="btn btn-sm btn-primary" type="submit" ng-click="$ctrl.submit($ctrl.textdata)">
+             Submit FeedBack
+            </button>
+          </div>
+          <div ng-if="$ctrl.editItem!==''">
+              <button class="btn btn-sm btn-primary" type="submit" ng-click="$ctrl.update($ctrl.textdata)">
+              Update comment
+             </button>
+           </div>
+          </div>
+        </form>
+      </div>
+
+     <item-todos items="$ctrl.postList" on-edit="$ctrl.editItem" ></item-todos>
+
+    </div>
+  </div>
+</div>
