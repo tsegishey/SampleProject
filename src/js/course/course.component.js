@@ -1,6 +1,7 @@
 class courseCtrl {
   constructor($state,CourseService,$q) {
     'ngInject';
+    console.log(this);
     this._CourseService=CourseService;
     this.ItemsDone=[];
     this.newarray= [];
@@ -9,7 +10,8 @@ class courseCtrl {
   }
   activate(){
     this._CourseService.courseList().then(res => {
-        this.ItemsDone =JSON.parse(JSON.stringify(res.data)).ItemsDone;
+      console.log(res);
+      this.ItemsDone =JSON.parse(JSON.stringify(res.data)).ItemsDone;
     });
   }
 
@@ -27,5 +29,10 @@ class courseCtrl {
     }
      
 }
+let courseComp={
+  templateUrl: 'course/course-item.html',
+  controller:courseCtrl,
+  controllerAs: '$ctrl'
+  };
 
-export default courseCtrl;
+export default courseComp;

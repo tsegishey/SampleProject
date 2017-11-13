@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="page-header customheader">To do List Example </div><br/>
+  <div ng-if="$ctrl.infoList.length>=0">
+    <input class='form-control' style="width:150px;display:inline-block;" ng-model="$ctrl.newtask" type="text"/>
+    <button style="display:inline-block;"  class='btn btn-sm btn-primary' ng-click="$ctrl.addTask($ctrl.newtask)">Add</button>
+  </div><br/>
+  <div  ng-if="$ctrl.infoList.length>0" class="divtitile">List of Items:{{$ctrl.infoList.length}}</div>
+  <list-todos todos="$ctrl.infoList"></list-todos>
+  
+</div>
+ 
+ 
