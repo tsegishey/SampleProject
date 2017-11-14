@@ -4,8 +4,10 @@
     <input class='form-control' style="width:150px;display:inline-block;" ng-model="$ctrl.newtask" type="text"/>
     <button style="display:inline-block;"  class='btn btn-sm btn-primary' ng-click="$ctrl.addTask($ctrl.newtask)">Add</button>
   </div><br/>
-  <div  ng-if="$ctrl.infoList.length>0" class="divtitile">List of Items:{{$ctrl.infoList.length}}</div>
-  <list-todos todos="$ctrl.infoList"></list-todos>
+  <div style="display:inline" ng-if="$ctrl.infoList.length>0" class="divtitile">List of Items:{{$ctrl.infoList.length}}</div>
+  <div style="display:inline" ng-if="$ctrl.infoList.length>0"><span style="padding-left:2px;color:red"  class="btn btn-sm btn-link" ng-click="$ctrl.DeleteAll($ctrl.infoList.length)">Delete All</span>  </div>
+  <!-- <list-todos todos="$ctrl.infoList" ></list-todos> -->
+  <list-todos todos="$ctrl.infoList" api="$ctrl.homeApi" ></list-todos> 
   
 </div>
  

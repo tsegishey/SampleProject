@@ -1,7 +1,6 @@
 class courseCtrl {
   constructor($state,CourseService,$q) {
     'ngInject';
-    console.log(this);
     this._CourseService=CourseService;
     this.ItemsDone=[];
     this.newarray= [];
@@ -10,8 +9,7 @@ class courseCtrl {
   }
   activate(){
     this._CourseService.courseList().then(res => {
-      console.log(res);
-      this.ItemsDone =JSON.parse(JSON.stringify(res.data)).ItemsDone;
+    this.ItemsDone =JSON.parse(JSON.stringify(res.data)).ItemsDone;
     });
   }
 

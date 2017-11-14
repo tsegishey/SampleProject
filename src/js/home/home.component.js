@@ -1,11 +1,17 @@
 class HomeCtrl {
   constructor() {
     'ngInject';
-    console.log(this);
+    this.homeApi=null;
     this.infoList=[];
     this.newtask="";
     
    
+  }
+  DeleteAll(length)
+  {
+   if(this.homeApi.delete){
+      this.homeApi.delete(length);
+    }
   }
 //I'm pushing a new task to the task list
   addTask(task1) {
